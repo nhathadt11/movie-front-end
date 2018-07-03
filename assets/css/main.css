@@ -156,3 +156,86 @@ body {
   color: brown;
   background-color: antiquewhite;
 }
+
+.container-detail {
+  position: relative;
+  margin: auto;
+  overflow: hidden;
+  background: #fff;
+  max-width: 960px;
+  display: flex;
+  justify-content: space-between;
+  padding: 25px;
+}
+
+.container-detail > .movie > .title {
+  font-size: 2.4em;
+  color: #4E4E4E;
+  margin-top: -5px;
+}
+
+.container-detail > .movie > .year {
+  margin-top: -5px;
+  font-size: 2rem;
+  color: rgba(0,0,0,.4);
+}
+
+.images {
+  flex: 0 0 45%;
+}
+
+.images > img {
+  max-width: 100%;
+  height: auto;
+}
+
+.movie {
+  flex: 0 0 45%;
+}
+
+.plot {
+  text-transform: none;
+  letter-spacing: 0;
+  margin-bottom: 17px;
+  color: #4E4E4E;
+  font-size: 1em;
+  line-height: 1.6em;
+  text-align: justify;
+  padding-left: 2rem;
+  position: relative;
+}
+
+.plot::before {
+  content: '';
+  height: 100%;
+  width: 3px;
+  background-color: darkorange;
+  position: absolute;
+  left: 0;
+}
+
+.movie-detail {
+  padding: 0;
+}
+
+.movie-detail td {
+  padding: 0;
+  border-bottom: unset;
+}
+
+.label {
+  width: 100px;
+  text-align: right;
+  display: inline-block;
+  color: rgba(0,0,0,.4);
+  padding-right: .7rem !important;
+}
+
+.pdf {
+  border: 2px solid #0a0a0a;
+  background-color: cornsilk;
+}
+
+.buttons {
+  margin-top: 2rem;
+}
