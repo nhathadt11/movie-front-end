@@ -130,3 +130,25 @@ body {
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
+
+.pagination {
+  text-decoration: unset;
+}
+
+.pagination-item {
+  width: 24px;
+  height: 24px;
+  display: inline-block;
+  text-align: center;
+}
+
+.pagination-item:hover {
+  opacity: .7;
+  cursor: pointer;
+  color: #000;
+}
+
+.pagination-item.active {
+  color: brown;
+  background-color: antiquewhite;
+}
