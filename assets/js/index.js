@@ -7,6 +7,7 @@
 
   var BASE_URL = 'http://localhost:4567';
   var client = new http.SimpleHTTPClient();
+  var XML = new xml.XML();
 
   fetchMoviesByPage(1, function(xml) {
     displayMovies(xml);
@@ -35,7 +36,7 @@
     var xsl = localStorage.getItem('movie.xsl');
 
     if (xsl) {
-      var htmlMoviesFragment = transformToHtmlDocument(xml, xsl);
+      var htmlMoviesFragment = XML.transformToHtmlDocument(xml, xsl);
       var movieList = document.querySelector('.twelve.column.movie-list');
 
       removeAllChildrenFrom(movieList);
@@ -46,22 +47,6 @@
   function removeAllChildrenFrom(doc) {
     while (doc.firstChild) {
       doc.removeChild(doc.firstChild);
-    }
-  }
-
-  function parseFromString(xml) {
-    return new DOMParser().parseFromString(xml, 'application/xml');
-  }
-
-  function transformToHtmlDocument(xml, xsl) {
-    if (document.implementation && document.implementation.createDocument) {
-      var xmlDoc = parseFromString(xml);
-      var xslDoc = parseFromString(xsl);
-
-      var xsltProcessor = new XSLTProcessor();
-      xsltProcessor.importStylesheet(xslDoc);
-
-      return xsltProcessor.transformToFragment(xmlDoc, document);
     }
   }
 
@@ -112,3 +97,21 @@
     })
   }
 })();
+
+var movieController = (function() {
+  var BASE_URL = 'http://localhost:4567';
+  var client = new http.SimpleHTTPClient();
+
+  return {
+    showDetails: showDetails,
+  }
+
+  function showDetails(movie) {
+    var id = movie.getAttribute('data-id');
+
+    client
+      .get(BASE_URL + '/movies/' + id)
+      .after(console.log)
+      .send();
+  }
+})()
