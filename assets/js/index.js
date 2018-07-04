@@ -144,8 +144,8 @@
       pagination.appendChild(li);
     }
 
-    var footer = document.querySelector('.row.footer');
-    footer.appendChild(pagination);
+    var pageginationContainer = document.querySelector('.row.pagination-container');
+    pageginationContainer.appendChild(pagination);
   }
 
   function setPageActive(pageActive) {
