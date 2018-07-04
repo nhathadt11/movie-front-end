@@ -26,11 +26,8 @@
   document.controller = controller;
 
   function handleModelChange(data) {
-    var movieList = document.querySelector('.twelve.column.movie-list');
-    var movieDetail = document.querySelector('.container-detail');
-
-    movieList.style.display = 'none';
-    movieDetail.style.display = 'none';
+    showListView(false);
+    showDetailView(false);
 
     if (data.showListView) {
       displayMovies(data.moviesXML);
@@ -92,7 +89,7 @@
       removeAllChildrenFrom(movieList);
       movieList.appendChild(htmlMoviesFragment);
 
-      movieList.style.display = 'block';
+      showListView(true);
     }
   }
 
@@ -106,8 +103,18 @@
       removeAllChildrenFrom(movieDetail);
       movieDetail.appendChild(htmlMovieDetailFragment);
 
-      movieDetail.style.display = 'flex';
+      showDetailView(true);
     }
+  }
+
+  function showListView(show) {
+    var listView = document.querySelector('.list-view');
+    listView.style.display = show ? 'block' : 'none';
+  }
+
+  function showDetailView(show) {
+    var detailView = document.querySelector('.container-detail');
+    detailView.style.display = show ? 'flex' : 'none';
   }
 
   function removeAllChildrenFrom(doc) {
