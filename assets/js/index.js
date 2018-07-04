@@ -20,6 +20,7 @@
   var controller = new MVC.Controller(view, model, {
     fetchMoviesByPage: fetchMoviesByPage,
     fetchMovieDetail: fetchMovieDetail,
+    backToListView: backToListView,
   });
 
   // expose controller to global scope
@@ -79,6 +80,10 @@
       .send();
   }
 
+  function backToListView() {
+    controller.updateData({ showListView: true });
+  }
+
   function displayMovies(xml) {
     var xsl = localStorage.getItem('movie.xsl');
 
@@ -113,7 +118,7 @@
   }
 
   function showDetailView(show) {
-    var detailView = document.querySelector('.container-detail');
+    var detailView = document.querySelector('.detail-view');
     detailView.style.display = show ? 'flex' : 'none';
   }
 
