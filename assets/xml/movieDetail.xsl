@@ -24,7 +24,7 @@
         </tbody>
       </table>
       <div class="buttons">
-        <button class="pdf">PDF</button>
+        <button class="pdf clickable">PDF</button>
       </div>
     </div>
   </xsl:template>

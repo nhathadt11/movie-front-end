@@ -109,6 +109,10 @@ body {
   margin: 5px;
 }
 
+.clickable:hover {
+  cursor: pointer;
+}
+
 .menu {
   color: #534741;
   font-weight: 600;
