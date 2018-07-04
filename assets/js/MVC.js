@@ -5,47 +5,47 @@
     Controller: Controller,
   }
 
-  function Model() {
-    this._data = {};
-    this._listeners = [];
+  function Model(data) {
+    var _data = data || {};
+    var _listeners = [];
 
     this.getData = function() {
-      return this._data;
+      return _data;
     }
 
     this.setData = function(data) {
-      this._data = Object.assign({}, this._data, data);
+      _data = data;
 
       this.notifyAll();
     }
 
     this.register = function(listener) {
-      this._listeners.push(listener);
+      _listeners.push(listener);
     }
 
     this.notifyAll = function() {
-      this._listeners.forEach(listener => {
-        listener.notify();
-      });
+      _listeners.forEach(function(listener) {
+        listener.notify(_data);
+      }.bind(this));
     }
   }
 
   function View(model) {
-    this._model = model;
+    var _model = model;
 
-    this.updateData = function(data) {
-      this._model.setData(data);
+    _model.register(this);
+
+    this.notify = function(data) {
+      console.log('Notified data: ', data);
     }
   }
 
   function Controller(view, model) {
-    this._view = view;
-    this._model = model;
+    var _view = view;
+    var _model = model;
 
-    this._model.register(this);
-
-    this.notify = function() {
-      console.log('Notified data: ', this._model.getData());
+    this.updateData = function(data) {
+      _model.setData(data);
     }
   }
 })(window)
@@ -54,4 +54,4 @@ var model = new SimpleMVC.Model();
 var view = new SimpleMVC.View(model);
 var controller = new SimpleMVC.Controller(view, model);
 
-view.updateData({ data: 'abc' })
+controller.updateData({ data: 'abc' })
