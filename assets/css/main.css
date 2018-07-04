@@ -245,3 +245,35 @@ body {
 .buttons {
   margin-top: 2rem;
 }
+
+.arrow {
+	position: absolute;
+	top: 50%;
+	width: 1vmin;
+	height: 1vmin;
+	background: transparent;
+	border-top: 0.25vmin solid darkorange;
+	border-right: 0.25vmin solid darkorange;
+	box-shadow: 0 0 0 lightgray;
+}
+
+.arrow.left {
+  left: 10px;
+  transform: translate3d(0,-50%,0) rotate(-135deg);
+}
+
+.arrow:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%,-60%) rotate(45deg);
+  width: 200%;
+  height: 200%;
+}
+
+.back {
+  position: relative;
+  line-height: 100%;
+  padding: 0 3rem;
+}
