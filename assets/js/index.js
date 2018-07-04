@@ -8,11 +8,23 @@
   var BASE_URL = 'http://localhost:4567';
   var client = new http.SimpleHTTPClient();
   var XML = new xml.XML();
+  var MVC = new mvc.SimpleMVC();
 
-  fetchMoviesByPage(1, function(xml) {
-    displayMovies(xml);
-    setPageActive(1);
+  var model = new MVC.Model({
+    moviesXML: undefined,
+    movieDetailXML: undefined,
   });
+  var view = new MVC.View(model, handleModelChange);
+  var controller = new MVC.Controller(view, model, {
+    fetchMoviesByPage: fetchMoviesByPage,
+  });
+
+  function handleModelChange(data) {
+    displayMovies(data.moviesXML);
+    // setPageActive(1);
+  }
+
+  fetchMoviesByPage(1);
 
   function fetchMovieStylesheet() {
     client
@@ -25,10 +37,13 @@
     localStorage.setItem('movie.xsl', stylesheet);
   }
 
-  function fetchMoviesByPage(pageNumber, success) {
+  function fetchMoviesByPage(pageNumber) {
     client
       .get(BASE_URL + '/movies/page/' + pageNumber)
-      .after(success)
+      .after(function(xml) {
+        controller.updateData({ moviesXML: xml });
+        setPageActive(pageNumber);
+      })
       .send();
   }
 
@@ -71,10 +86,7 @@
 
       li.addEventListener('click', (function(page) {
         return function() {
-          fetchMoviesByPage(page, function(xml) {
-            displayMovies(xml);
-            setPageActive(page);
-          });
+          controller.fetchMoviesByPage(page);
         }
       })(i));
 
@@ -97,21 +109,3 @@
     })
   }
 })();
-
-var movieController = (function() {
-  var BASE_URL = 'http://localhost:4567';
-  var client = new http.SimpleHTTPClient();
-
-  return {
-    showDetails: showDetails,
-  }
-
-  function showDetails(movie) {
-    var id = movie.getAttribute('data-id');
-
-    client
-      .get(BASE_URL + '/movies/' + id)
-      .after(console.log)
-      .send();
-  }
-})()
