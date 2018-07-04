@@ -2,6 +2,7 @@
 (function() {
   document.addEventListener('DOMContentLoaded', function() {
     fetchMovieStylesheet();
+    fetchMovieDetailStylesheet();
     renderPagination(7, 1);
   });
 
@@ -13,15 +14,29 @@
   var model = new MVC.Model({
     moviesXML: undefined,
     movieDetailXML: undefined,
+    showListView: true,
   });
   var view = new MVC.View(model, handleModelChange);
   var controller = new MVC.Controller(view, model, {
     fetchMoviesByPage: fetchMoviesByPage,
+    fetchMovieDetail: fetchMovieDetail,
   });
 
+  // expose controller to global scope
+  document.controller = controller;
+
   function handleModelChange(data) {
-    displayMovies(data.moviesXML);
-    // setPageActive(1);
+    var movieList = document.querySelector('.twelve.column.movie-list');
+    var movieDetail = document.querySelector('.container-detail');
+
+    movieList.style.display = 'none';
+    movieDetail.style.display = 'none';
+
+    if (data.showListView) {
+      displayMovies(data.moviesXML);
+    } else {
+      displayMovieDetail(data.movieDetailXML);
+    }
   }
 
   fetchMoviesByPage(1);
@@ -33,16 +48,36 @@
       .send();
   }
 
+  function fetchMovieDetailStylesheet() {
+    client
+      .get('/assets/xml/movieDetail.xsl')
+      .after(saveMovieDetailStyleSheetToLocalStorage)
+      .send();
+  }
+
   function saveStyleSheetToLocalStorage(stylesheet) {
     localStorage.setItem('movie.xsl', stylesheet);
+  }
+
+  function saveMovieDetailStyleSheetToLocalStorage(stylesheet) {
+    localStorage.setItem('movieDetail.xsl', stylesheet);
   }
 
   function fetchMoviesByPage(pageNumber) {
     client
       .get(BASE_URL + '/movies/page/' + pageNumber)
       .after(function(xml) {
-        controller.updateData({ moviesXML: xml });
+        controller.updateData({ moviesXML: xml, showListView: true });
         setPageActive(pageNumber);
+      })
+      .send();
+  }
+
+  function fetchMovieDetail(id) {
+    client
+      .get(BASE_URL + '/movies/' + id)
+      .after(function(xml) {
+        controller.updateData({ movieDetailXML: xml, showListView: false });
       })
       .send();
   }
@@ -56,6 +91,22 @@
 
       removeAllChildrenFrom(movieList);
       movieList.appendChild(htmlMoviesFragment);
+
+      movieList.style.display = 'block';
+    }
+  }
+
+  function displayMovieDetail(xml) {
+    var xsl = localStorage.getItem('movieDetail.xsl');
+
+    if (xsl) {
+      var htmlMovieDetailFragment = XML.transformToHtmlDocument(xml, xsl);
+      var movieDetail = document.querySelector('.container-detail');
+
+      removeAllChildrenFrom(movieDetail);
+      movieDetail.appendChild(htmlMovieDetailFragment);
+
+      movieDetail.style.display = 'flex';
     }
   }
 
@@ -79,7 +130,7 @@
       li.innerText = i;
 
       if (i === activePage) {
-        li.classList.add('activeadd')
+        li.classList.add('active')
       } else {
         li.classList.remove('active');
       }
