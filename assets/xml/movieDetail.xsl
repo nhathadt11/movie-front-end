@@ -5,7 +5,7 @@
 
   <xsl:template match="/movies/movie">
     <div class="images">
-      <img src="http://via.placeholder.com/430x430" />
+      <img src="{image}" />
     </div>
     <div class="movie">
       <h1 class="title"><xsl:value-of select="title/text()" /></h1>

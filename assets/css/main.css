@@ -196,6 +196,12 @@ body {
 
 .images > img {
   max-width: 100%;
+  width: 100%;
+  height: auto;
+}
+
+.image > img {
+  width: 250px;
   height: auto;
 }
 

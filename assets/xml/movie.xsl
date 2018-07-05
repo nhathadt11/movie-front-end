@@ -6,7 +6,7 @@
     <xsl:for-each select="movies/movie">
       <div class="ui card float-card clickable" data-id="{id}" onclick="controller.fetchMovieDetail(this.getAttribute('data-id'))">
         <div class="image">
-          <img src="http://via.placeholder.com/250x250" />
+          <img src="{image}" />
         </div>
         <div class="content">
           <a class="header line-clamp-2"><xsl:value-of select="title/text()"/></a>
