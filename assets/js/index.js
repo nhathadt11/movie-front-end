@@ -21,7 +21,7 @@
   });
   var view = new MVC.View(model, handleModelChange);
   var controller = new MVC.Controller(view, model, {
-    fetchMoviesByPage: fetchMoviesByPage,
+    fetchMovies: fetchMovies,
     fetchMovieDetail: fetchMovieDetail,
     backToListView: backToListView,
   });
@@ -40,7 +40,7 @@
     }
   }
 
-  fetchMoviesByPage(1);
+  fetchMovies(1);
 
   function fetchMovieStylesheet() {
     client
@@ -64,7 +64,7 @@
     localStorage.setItem('movieDetail.xsl', stylesheet);
   }
 
-  function fetchMoviesByPage(pageNumber) {
+  function fetchMovies(pageNumber) {
     client
       .get(BASE_URL + '/movies/page/' + pageNumber)
       .after(function(xml) {
@@ -154,7 +154,7 @@
 
       li.addEventListener('click', (function(page) {
         return function() {
-          controller.fetchMoviesByPage(page);
+          controller.fetchMovies(page);
         }
       })(i));
 
