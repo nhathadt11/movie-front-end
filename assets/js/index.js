@@ -15,6 +15,9 @@
     moviesXML: undefined,
     movieDetailXML: undefined,
     showListView: true,
+    params: {
+      page: 1,
+    },
   });
   var view = new MVC.View(model, handleModelChange);
   var controller = new MVC.Controller(view, model, {
@@ -65,7 +68,9 @@
     client
       .get(BASE_URL + '/movies/page/' + pageNumber)
       .after(function(xml) {
-        controller.updateData({ moviesXML: xml, showListView: true });
+        var nextParams = withNewParams({ page: pageNumber });
+
+        controller.updateData({ moviesXML: xml, params: nextParams, showListView: true });
         setPageActive(pageNumber);
       })
       .send();
@@ -170,5 +175,12 @@
         page.classList.remove('active');
       }
     })
+  }
+
+  function withNewParams(newParams) {
+    var prevParams = model.getData().params;
+    var nextParams = Object.assign({}, prevParams, newParams);
+
+    return nextParams;
   }
 })();
