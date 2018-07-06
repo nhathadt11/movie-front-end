@@ -3,6 +3,7 @@
   document.addEventListener('DOMContentLoaded', function() {
     fetchMovieStylesheet();
     fetchMovieDetailStylesheet();
+    fetchMovies(1);
     renderPagination(7, 1);
   });
 
@@ -24,6 +25,7 @@
     fetchMovies: fetchMovies,
     fetchMovieDetail: fetchMovieDetail,
     backToListView: backToListView,
+    searchFor: searchFor,
   });
 
   // expose controller to global scope
@@ -39,8 +41,6 @@
       displayMovieDetail(data.movieDetailXML);
     }
   }
-
-  fetchMovies(1);
 
   function fetchMovieStylesheet() {
     client
@@ -64,11 +64,13 @@
     localStorage.setItem('movieDetail.xsl', stylesheet);
   }
 
-  function fetchMovies(pageNumber) {
+  function fetchMovies(pageNumber, _title) {
+    var title = _title === undefined ? model.getData().params.title : _title;
+    
     client
-      .get(BASE_URL + '/movies/page/' + pageNumber)
+      .get(BASE_URL + '/movies/page/' + pageNumber, { params: { title: title } })
       .after(function(xml) {
-        var nextParams = withNewParams({ page: pageNumber });
+        var nextParams = withNewParams({ page: pageNumber, title: title });
 
         controller.updateData({ moviesXML: xml, params: nextParams, showListView: true });
         setPageActive(pageNumber);
@@ -83,6 +85,17 @@
         controller.updateData({ movieDetailXML: xml, showListView: false });
       })
       .send();
+  }
+
+  function searchFor(e) {
+    e.preventDefault();
+
+    if (e.keyCode === 13) {
+      var pageNumber = model.getData().params.page;
+      var title = e.target.value;
+  
+      fetchMovies(pageNumber, title);
+    }
   }
 
   function backToListView() {
