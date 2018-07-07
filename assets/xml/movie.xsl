@@ -14,7 +14,7 @@
             <span class="date"><xsl:value-of select="year/text()"/></span>
           </div>
           <div class="description line-clamp-3">
-            <xsl:value-of select="plot/text()">
+            <xsl:value-of select="plot/text()"/>
           </div>
         </div>
       </div>
