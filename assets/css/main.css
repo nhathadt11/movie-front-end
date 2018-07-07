@@ -145,6 +145,7 @@ body {
 
 .pagination {
   text-decoration: unset;
+  text-align: center;
 }
 
 .pagination-item {
