@@ -18,6 +18,7 @@
     showListView: true,
     params: {
       page: 1,
+      title: undefined,
     },
   });
   var view = new MVC.View(model, handleModelChange);
