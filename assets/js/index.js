@@ -4,7 +4,6 @@
     fetchMovieStylesheet();
     fetchMovieDetailStylesheet();
     fetchMovies(1);
-    renderPagination(7, 1);
   });
 
   var BASE_URL = 'http://localhost:4567';
@@ -74,6 +73,7 @@
         var nextParams = withNewParams({ page: pageNumber, title: title });
 
         controller.updateData({ moviesXML: xml, params: nextParams, showListView: true });
+        renderPagination(50, pageNumber);
         setPageActive(pageNumber);
       })
       .send();
@@ -154,11 +154,13 @@
     var pagination = document.createElement('ul');
     pagination.classList.add('pagination');
 
-    for (var i = 1; i <= totalPage; i++) {
+    // generate pagination items with page break
+    var paginationItems = paginationWithPageBreak(totalPage, activePage);
+    for (var i = 1; i <= paginationItems.length; i++) {
       var li = document.createElement('li');
 
       li.classList.add('float-card', 'pagination-item')
-      li.innerText = i;
+      li.innerText = paginationItems[i - 1];
 
       if (i === activePage) {
         li.classList.add('active')
@@ -170,13 +172,49 @@
         return function() {
           controller.fetchMovies(page);
         }
-      })(i));
+      })(paginationItems[i - 1]));
 
       pagination.appendChild(li);
     }
 
+    // re-append pagination items to its container
     var pageginationContainer = document.querySelector('.row.pagination-container');
+    removeAllChildrenFrom(pageginationContainer);
     pageginationContainer.appendChild(pagination);
+  }
+
+  function paginationWithPageBreak(totalPage, pageActive) {
+    let delta = 2,
+        left = pageActive - delta,
+        right = pageActive + delta + 1,
+        result = [];
+
+    result = Array.from({length: totalPage}, (v, k) => k + 1)
+        .filter(i => i && i >= left && i < right);
+
+    if (totalPage > 7) {
+      if (pageActive - delta - 1 > 1) {
+        result.splice(0, 0, '...');
+      }
+      if (pageActive + delta + 1 < totalPage) {
+        result.splice(result.length, 0, '...');
+      }
+
+      if (result.find(findValue(1)) === undefined) {
+        result.unshift(1);
+      }
+      if (result.find(findValue(totalPage)) === undefined) {
+        result.push(totalPage);
+      }
+    }
+
+    return result;
+  }
+
+  function findValue(expected) {
+    return function(value) {
+      return value === expected;
+    }
   }
 
   function setPageActive(pageActive) {
