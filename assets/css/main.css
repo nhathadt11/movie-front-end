@@ -152,6 +152,8 @@ body {
   height: 24px;
   display: inline-block;
   text-align: center;
+  position: relative;
+  vertical-align: middle;
 }
 
 .pagination-item:hover {
@@ -270,6 +272,11 @@ body {
 .arrow.left {
   left: 10px;
   transform: translate3d(0,-50%,0) rotate(-135deg);
+}
+
+.arrow.right {
+  right: 10px;
+  transform: translate3d(0,-50%,0) rotate(-315deg);
 }
 
 .arrow:before {

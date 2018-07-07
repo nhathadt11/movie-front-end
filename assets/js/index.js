@@ -188,6 +188,9 @@
       pagination.appendChild(li);
     }
 
+    // add prev and next button
+    pagination = withPrevAndNext(pagination);
+
     // re-append pagination items to its container
     var pageginationContainer = document.querySelector('.row.pagination-container');
     removeAllChildrenFrom(pageginationContainer);
@@ -226,6 +229,41 @@
     return function(value) {
       return value === expected;
     }
+  }
+
+  function withPrevAndNext(pagination) {
+    if (!pagination.firstChild) return;
+
+    var pageActive = model.getData().params.page;
+    var moviesXML = model.getData().moviesXML;
+    var totalPage = queryTotalPage(moviesXML);
+
+    var prev = document.createElement('li');
+    prev.classList.add('float-card', 'pagination-item');
+    prev.innerHTML = '<a href="#" class="arrow left"></a>';
+    prev.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      if (pageActive > 1) {
+        fetchMovies(pageActive - 1);
+      }
+    });
+
+    var next = document.createElement('li');
+    next.classList.add('float-card', 'pagination-item');
+    next.innerHTML = '<a href="#" class="arrow right"></a>';
+    next.addEventListener('click', function(e) {
+      e.preventDefault();
+
+      if (pageActive < totalPage) {
+        fetchMovies(pageActive + 1);
+      }
+    });
+
+    pagination.insertBefore(prev, pagination.firstChild);
+    pagination.appendChild(next);
+
+    return pagination;
   }
 
   function setPageActive(pageActive) {
