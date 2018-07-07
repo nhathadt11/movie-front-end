@@ -96,10 +96,9 @@
     e.preventDefault();
 
     if (e.keyCode === 13) {
-      var pageNumber = model.getData().params.page;
       var title = e.target.value;
   
-      fetchMovies(pageNumber, title);
+      fetchMovies(1, title);
     }
   }
 
