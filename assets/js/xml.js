@@ -6,22 +6,27 @@
   function XML() {
     return {
       transformToHtmlDocument: transformToHtmlDocument,
+      domFromString: domFromString,
     }
   }
 
-  function parseFromString(xml) {
+  function domFromString(xml) {
     return new DOMParser().parseFromString(xml, 'application/xml');
   }
 
   function transformToHtmlDocument(xml, xsl) {
     if (document.implementation && document.implementation.createDocument) {
-      var xmlDoc = parseFromString(xml);
-      var xslDoc = parseFromString(xsl);
-
+      var xmlDoc = isDocument(xml) ? xml : domFromString(xml);
+      var xslDoc = isDocument(xsl) ? xml : domFromString(xsl);
+      
       var xsltProcessor = new XSLTProcessor();
       xsltProcessor.importStylesheet(xslDoc);
 
       return xsltProcessor.transformToFragment(xmlDoc, document);
     }
+  }
+
+  function isDocument(doc) {
+    return doc instanceof Document;
   }
 })(window);

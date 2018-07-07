@@ -72,8 +72,11 @@
       .after(function(xml) {
         var nextParams = withNewParams({ page: pageNumber, title: title });
 
-        controller.updateData({ moviesXML: xml, params: nextParams, showListView: true });
-        renderPagination(50, pageNumber);
+        var dom = XML.domFromString(xml);
+        var totalPage = queryTotalPage(dom);
+
+        controller.updateData({ moviesXML: dom, params: nextParams, showListView: true });
+        renderPagination(totalPage, pageNumber);
         setPageActive(pageNumber);
       })
       .send();
@@ -83,7 +86,8 @@
     client
       .get(BASE_URL + '/movies/' + id)
       .after(function(xml) {
-        controller.updateData({ movieDetailXML: xml, showListView: false });
+        var dom = XML.domFromString(xml);
+        controller.updateData({ movieDetailXML: dom, showListView: false });
       })
       .send();
   }
@@ -145,6 +149,13 @@
     while (doc.firstChild) {
       doc.removeChild(doc.firstChild);
     }
+  }
+
+  function queryTotalPage(dom) {
+    var totalPage = dom.evaluate('//@*[local-name()="totalCount"]', dom, null, XPathResult.NUMBER_TYPE, null).numberValue;
+    var pageSize = dom.evaluate('//@*[local-name()="pageSize"]', dom, null, XPathResult.NUMBER_TYPE, null).numberValue;
+
+    return Math.ceil(totalPage / pageSize);
   }
 
   /**
