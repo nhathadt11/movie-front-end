@@ -6,7 +6,8 @@
     fetchMovies(1);
   });
 
-  var BASE_URL = 'http://localhost:4567';
+  // var BASE_URL = 'http://localhost:4567';
+  var BASE_URL = 'https://your-movies.herokuapp.com';
   var client = new http.SimpleHTTPClient();
   var XML = new xml.XML();
   var MVC = new mvc.SimpleMVC();
