@@ -249,7 +249,7 @@ body {
   content: '';
   height: 100%;
   width: 3px;
-  background-color: #f3f3f3;
+  background-color: #0a0a0a;
   position: absolute;
   left: 0;
 }
