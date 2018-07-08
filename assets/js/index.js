@@ -156,6 +156,8 @@
   }
 
   function removeAllChildrenFrom(doc) {
+    if (doc === undefined) return;
+
     while (doc.firstChild) {
       doc.removeChild(doc.firstChild);
     }
@@ -205,7 +207,9 @@
     // re-append pagination items to its container
     var pageginationContainer = document.querySelector('.row.pagination-container');
     removeAllChildrenFrom(pageginationContainer);
-    pageginationContainer.appendChild(pagination);
+    if (pagination) {
+      pageginationContainer.appendChild(pagination);
+    }
   }
 
   function paginationWithPageBreak(totalPage, pageActive) {
