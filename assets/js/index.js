@@ -68,6 +68,7 @@
   function fetchMovies(pageNumber, _title) {
     // UI
     showListView(false);
+    showDetailView(false);
     showLoadingIndicator(true);
 
     var title = _title === undefined ? model.getData().params.title : _title;
