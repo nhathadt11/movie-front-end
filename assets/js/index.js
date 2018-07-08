@@ -181,6 +181,7 @@
 
       li.addEventListener('click', (function(page) {
         return function() {
+          setPageActive(page);
           controller.fetchMovies(page);
         }
       })(paginationItems[i - 1]));
