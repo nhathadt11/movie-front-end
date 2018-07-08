@@ -33,8 +33,8 @@
   document.controller = controller;
 
   function handleModelChange(data) {
-    showListView(false);
-    showDetailView(false);
+    showListView(Visibility.HIDDEN);
+    showDetailView(Visibility.HIDDEN);
 
     if (data.showListView) {
       displayMovies(data.moviesXML);
@@ -67,9 +67,9 @@
 
   function fetchMovies(pageNumber, _title) {
     // UI
-    showListView(false);
-    showDetailView(false);
-    showLoadingIndicator(true);
+    showListView(Visibility.HIDDEN);
+    showDetailView(Visibility.HIDDEN);
+    showLoadingIndicator(Visibility.VISIBLE);
 
     var title = _title === undefined ? model.getData().params.title : _title;
     
@@ -84,7 +84,7 @@
         controller.updateData({ moviesXML: dom, params: nextParams, showListView: true });
         renderPagination(totalPage, pageNumber);
         setPageActive(pageNumber);
-        showLoadingIndicator(false);
+        showLoadingIndicator(Visibility.HIDDEN);
       })
       .send();
   }
@@ -123,7 +123,7 @@
       removeAllChildrenFrom(movieList);
       movieList.appendChild(htmlMoviesFragment);
 
-      showListView(true);
+      showListView(Visibility.VISIBLE);
     }
   }
 
@@ -137,7 +137,7 @@
       removeAllChildrenFrom(movieDetail);
       movieDetail.appendChild(htmlMovieDetailFragment);
 
-      showDetailView(true);
+      showDetailView(Visibility.VISIBLE);
     }
   }
 
@@ -299,5 +299,10 @@
     var nextParams = Object.assign({}, prevParams, newParams);
 
     return nextParams;
+  }
+
+  var Visibility = {
+    VISIBLE: true,
+    HIDDEN: false,
   }
 })();
