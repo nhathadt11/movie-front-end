@@ -1,3 +1,9 @@
+@media (min-width: 550px) {
+  .header-inner {
+    width: 80%;
+  }
+}
+
 body {
   background-color: rgb(226, 224, 222);
 }
@@ -187,7 +193,6 @@ body {
 
 .container-detail {
   position: relative;
-  margin: auto;
   overflow: hidden;
   background: #fff;
   max-width: 960px;
@@ -195,7 +200,6 @@ body {
   justify-content: space-between;
   padding: 25px;
   margin-bottom: 4.5rem;
-  margin-top: 2.5rem;
 }
 
 .container-detail > .movie > .title {
