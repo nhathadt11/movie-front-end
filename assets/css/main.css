@@ -319,7 +319,8 @@ body {
 
 .search-bar {
   position: absolute;
-  background-color: thistle;
+  background-color: #0a0a0a;
+  color: #f3f3f3;
   width: 350px;
   height: 100%;
   border: none;
@@ -339,12 +340,14 @@ body {
   left: 50%;
   top: 43%;
   transform: translate(-50%, -50%);
+  background-color: #eee;
+  padding: 7px;
 }
 
 .sk-cube-grid .sk-cube {
   width: 33%;
   height: 33%;
-  background-color: lightgrey;
+  background-color: #000;
   float: left;
   -webkit-animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out;
           animation: sk-cubeGridScaleDelay 1.3s infinite ease-in-out; 
