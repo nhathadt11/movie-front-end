@@ -90,11 +90,17 @@
   }
 
   function fetchMovieDetail(id) {
+    //UI
+    showListView(Visibility.HIDDEN);
+    showLoadingIndicator(Visibility.VISIBLE);
+
     client
       .get(BASE_URL + '/movies/' + id)
       .after(function(xml) {
         var dom = XML.domFromString(xml);
         controller.updateData({ movieDetailXML: dom, showListView: false });
+
+        showLoadingIndicator(Visibility.HIDDEN);
       })
       .send();
   }
@@ -152,8 +158,8 @@
   }
 
   function showLoadingIndicator(show) {
-    var listView = document.querySelector('.loading');
-    listView.style.display = show ? 'block' : 'none';
+    var loading = document.querySelector('.loading');
+    loading.style.display = show ? 'block' : 'none';
   }
 
   function removeAllChildrenFrom(doc) {
