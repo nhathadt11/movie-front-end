@@ -194,7 +194,6 @@ body {
 .container-detail {
   position: relative;
   overflow: hidden;
-  background: #fff;
   max-width: 960px;
   display: flex;
   justify-content: space-between;
