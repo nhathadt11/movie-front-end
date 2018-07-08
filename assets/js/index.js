@@ -79,6 +79,7 @@
         controller.updateData({ moviesXML: dom, params: nextParams, showListView: true });
         renderPagination(totalPage, pageNumber);
         setPageActive(pageNumber);
+        showLoadingIndicator(false);
       })
       .send();
   }
@@ -145,6 +146,11 @@
     detailView.style.display = show ? 'flex' : 'none';
   }
 
+  function showLoadingIndicator(show) {
+    var listView = document.querySelector('.loading');
+    listView.style.display = show ? 'block' : 'none';
+  }
+
   function removeAllChildrenFrom(doc) {
     while (doc.firstChild) {
       doc.removeChild(doc.firstChild);
@@ -182,6 +188,8 @@
       li.addEventListener('click', (function(page) {
         return function() {
           setPageActive(page);
+          showListView(false);
+          showLoadingIndicator(true);
           controller.fetchMovies(page);
         }
       })(paginationItems[i - 1]));
