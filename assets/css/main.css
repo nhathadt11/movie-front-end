@@ -178,6 +178,7 @@ body {
   text-align: center;
   position: relative;
   vertical-align: middle;
+  background-color: #f3f3f3;
 }
 
 .pagination-item:hover {
@@ -187,8 +188,8 @@ body {
 }
 
 .pagination-item.active {
-  color: brown;
-  background-color: antiquewhite;
+  color: #f3f3f3;
+  background-color: #0a0a0a;
 }
 
 .container-detail {
@@ -248,7 +249,7 @@ body {
   content: '';
   height: 100%;
   width: 3px;
-  background-color: darkorange;
+  background-color: #f3f3f3;
   position: absolute;
   left: 0;
 }
@@ -270,9 +271,15 @@ body {
   padding-right: .7rem !important;
 }
 
-.pdf {
-  border: 2px solid #0a0a0a;
-  background-color: cornsilk;
+.omg {
+  color: #f3f3f3;
+  background-color: #0a0a0a;
+}
+
+.omg:hover {
+  color: #f3f3f3;
+  background-color: #0a0a0a;
+  opacity: .7;
 }
 
 .buttons {
@@ -285,8 +292,8 @@ body {
 	width: 1vmin;
 	height: 1vmin;
 	background: transparent;
-	border-top: 0.25vmin solid darkorange;
-	border-right: 0.25vmin solid darkorange;
+	border-top: 0.25vmin solid #0a0a0a;
+	border-right: 0.25vmin solid #0a0a0a;
 	box-shadow: 0 0 0 lightgray;
 }
 
