@@ -149,11 +149,18 @@
   function showDetailView(show) {
     var detailView = document.querySelector('.detail-view');
     detailView.style.display = show ? 'flex' : 'none';
+
+    showPagination(!show);
   }
 
   function showLoadingIndicator(show) {
-    var listView = document.querySelector('.loading');
-    listView.style.display = show ? 'block' : 'none';
+    var loading = document.querySelector('.loading');
+    loading.style.display = show ? 'block' : 'none';
+  }
+
+  function showPagination(show) {
+    var pagination = document.querySelector('.pagination-container');
+    pagination.style.display = show ? 'block' : 'none';
   }
 
   function removeAllChildrenFrom(doc) {
@@ -261,7 +268,8 @@
       e.preventDefault();
 
       if (pageActive > 1) {
-        fetchMovies(pageActive - 1);
+        fetchMovies(pageActive--);
+        setPageActive(pageActive);
       }
     });
 
@@ -272,7 +280,8 @@
       e.preventDefault();
 
       if (pageActive < totalPage) {
-        fetchMovies(pageActive + 1);
+        fetchMovies(pageActive++);
+        setPageActive(pageActive);
       }
     });
 
