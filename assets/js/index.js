@@ -66,6 +66,10 @@
   }
 
   function fetchMovies(pageNumber, _title) {
+    // UI
+    showListView(false);
+    showLoadingIndicator(true);
+
     var title = _title === undefined ? model.getData().params.title : _title;
     
     client
@@ -188,8 +192,6 @@
       li.addEventListener('click', (function(page) {
         return function() {
           setPageActive(page);
-          showListView(false);
-          showLoadingIndicator(true);
           controller.fetchMovies(page);
         }
       })(paginationItems[i - 1]));
