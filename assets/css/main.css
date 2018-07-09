@@ -353,10 +353,9 @@ body {
   position: absolute;
   left: 50%;
   top: 43%;
-  transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%) rotate(45deg);
   background-color: #eee;
   padding: 7px;
-  transform: rotate(45deg);
 }
 
 .sk-cube-grid .sk-cube {
