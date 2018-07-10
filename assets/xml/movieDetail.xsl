@@ -24,7 +24,7 @@
         </tbody>
       </table>
       <div class="buttons">
-        <button class="button omg clickable">OMG It !!!</button>
+        <a href="{url}" target="_blank" class="button omg clickable">OMG It !!!</a>
       </div>
     </div>
   </xsl:template>
