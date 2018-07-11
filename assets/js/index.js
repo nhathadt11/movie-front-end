@@ -11,6 +11,7 @@
   var client = new http.SimpleHTTPClient();
   var XML = new xml.XML();
   var MVC = new mvc.SimpleMVC();
+  var simpleMemoryStorage = new Map();
 
   var model = new MVC.Model({
     moviesXML: undefined,
@@ -46,23 +47,23 @@
   function fetchMovieStylesheet() {
     client
       .get('/assets/xml/movie.xsl')
-      .after(saveStyleSheetToLocalStorage)
+      .after(saveStyleSheetToStorage)
       .send();
   }
 
   function fetchMovieDetailStylesheet() {
     client
       .get('/assets/xml/movieDetail.xsl')
-      .after(saveMovieDetailStyleSheetToLocalStorage)
+      .after(saveMovieDetailStyleSheetToStorage)
       .send();
   }
 
-  function saveStyleSheetToLocalStorage(stylesheet) {
-    localStorage.setItem('movie.xsl', stylesheet);
+  function saveStyleSheetToStorage(stylesheet) {
+    simpleMemoryStorage.set('movie.xsl', stylesheet);
   }
 
-  function saveMovieDetailStyleSheetToLocalStorage(stylesheet) {
-    localStorage.setItem('movieDetail.xsl', stylesheet);
+  function saveMovieDetailStyleSheetToStorage(stylesheet) {
+    simpleMemoryStorage.set('movieDetail.xsl', stylesheet);
   }
 
   function fetchMovies(pageNumber, _title) {
@@ -120,7 +121,7 @@
   }
 
   function displayMovies(xml) {
-    var xsl = localStorage.getItem('movie.xsl');
+    var xsl = simpleMemoryStorage.get('movie.xsl');
 
     if (xsl) {
       var htmlMoviesFragment = XML.transformToHtmlDocument(xml, xsl);
@@ -134,7 +135,7 @@
   }
 
   function displayMovieDetail(xml) {
-    var xsl = localStorage.getItem('movieDetail.xsl');
+    var xsl = simpleMemoryStorage.get('movieDetail.xsl');
 
     if (xsl) {
       var htmlMovieDetailFragment = XML.transformToHtmlDocument(xml, xsl);
