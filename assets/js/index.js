@@ -328,7 +328,7 @@
   }
 
   function containsOnlyDigits(value) {
-    return /^d+$/.test(value);
+    return /^\d+$/.test(value);
   }
 
   var Visibility = {
