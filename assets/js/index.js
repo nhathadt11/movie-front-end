@@ -200,9 +200,13 @@
       }
 
       li.addEventListener('click', (function(page) {
-        return function() {
-          setPageActive(page);
-          controller.fetchMovies(page);
+        return function(e) {
+          if (containsOnlyDigits(e.target.textContent)) {
+            controller.fetchMovies(page);
+            setPageActive(page);
+          } else {
+            binarySearchFetch(e.target);
+          }
         }
       })(paginationItems[i - 1]));
 
@@ -289,6 +293,21 @@
     return pagination;
   }
 
+  function binarySearchFetch(pageBreak) {
+    var pageActive = model.getData().params.page;
+    var dom = model.getData().moviesXML;
+    var totalPage = queryTotalPage(dom);
+    var pageToGo = pageActive;
+
+    if (Number(pageBreak.previousSibling.textContent) === 1) { // left break
+      pageToGo = Math.ceil(pageActive / 2);
+    } else { // right break
+      pageToGo = Math.ceil(pageActive + ((totalPage - pageActive) / 2));
+    }
+
+    fetchMovies(pageToGo);
+  }
+
   function setPageActive(pageActive) {
     var pages = document.querySelectorAll('.float-card.pagination-item');
 
@@ -306,6 +325,10 @@
     var nextParams = Object.assign({}, prevParams, newParams);
 
     return nextParams;
+  }
+
+  function containsOnlyDigits(value) {
+    return /^d+$/.test(value);
   }
 
   var Visibility = {
