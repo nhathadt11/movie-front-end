@@ -85,8 +85,8 @@
         controller.updateData({ moviesXML: dom, params: nextParams, showListView: true });
         renderPagination(totalPage, pageNumber);
         setPageActive(pageNumber);
-        showLoadingIndicator(Visibility.HIDDEN);
       })
+      .whatever(showLoadingIndicator.bind(null, Visibility.HIDDEN))
       .send();
   }
 
@@ -100,9 +100,8 @@
       .after(function(xml) {
         var dom = XML.domFromString(xml);
         controller.updateData({ movieDetailXML: dom, showListView: false });
-
-        showLoadingIndicator(Visibility.HIDDEN);
       })
+      .whatever(showLoadingIndicator.bind(null, Visibility.HIDDEN))
       .send();
   }
 
