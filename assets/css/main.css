@@ -34,7 +34,7 @@ body {
 }
 
 .header-logo {
-  background-image: url(/assets/img/movie.png);
+  background-image: url(assets/img/movie.png);
   background-repeat: no-repeat;
   background-size: contain;
   background-position: 1em;

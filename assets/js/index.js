@@ -46,14 +46,14 @@
 
   function fetchMovieStylesheet() {
     client
-      .get('/assets/xml/movie.xsl')
+      .get('assets/xml/movie.xsl')
       .after(saveStyleSheetToStorage)
       .send();
   }
 
   function fetchMovieDetailStylesheet() {
     client
-      .get('/assets/xml/movieDetail.xsl')
+      .get('assets/xml/movieDetail.xsl')
       .after(saveMovieDetailStyleSheetToStorage)
       .send();
   }
