@@ -154,18 +154,14 @@ body {
   overflow: hidden;
 }
 
-.row.main {
-  margin-bottom: 86px;
-}
-
 .pagination-container {
   margin-top: 1.5rem;
   vertical-align: bottom;
-  position: absolute;
-  bottom: 0;
+  position: relative;
   left: 50%;
   transform: translate(-50%,0);
   width: 100%;
+  display: inline-block;
 }
 
 .pagination {
