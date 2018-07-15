@@ -37,11 +37,16 @@
     showListView(Visibility.HIDDEN);
     showDetailView(Visibility.HIDDEN);
 
-    if (data.showListView) {
-      displayMovies(data.moviesXML);
-    } else {
-      displayMovieDetail(data.movieDetailXML);
+    if (!data.showListView) {
+      return displayMovieDetail(data.movieDetailXML);
     }
+    
+    var totalCount = queryTotalCount(data.moviesXML);
+    if (totalCount > 0) {
+      return displayMovies(data.moviesXML);
+    }
+
+    showNoResults(totalCount > 0 ? Visibility.HIDDEN : Visibility.VISIBLE);
   }
 
   function fetchMovieStylesheet() {
@@ -71,6 +76,7 @@
     showListView(Visibility.HIDDEN);
     showDetailView(Visibility.HIDDEN);
     showLoadingIndicator(Visibility.VISIBLE);
+    showNoResults(Visibility.HIDDEN);
 
     var title = _title === undefined ? model.getData().params.title : _title;
     
@@ -162,6 +168,11 @@
     loading.style.display = show ? 'block' : 'none';
   }
 
+  function showNoResults(show) {
+    var noResults = document.querySelector('.no-results');
+    noResults.style.display = show ? 'flex' : 'none';
+  }
+
   function removeAllChildrenFrom(doc) {
     if (doc === undefined) return;
 
@@ -171,10 +182,18 @@
   }
 
   function queryTotalPage(dom) {
-    var totalPage = dom.evaluate('//@*[local-name()="totalCount"]', dom, null, XPathResult.NUMBER_TYPE, null).numberValue;
-    var pageSize = dom.evaluate('//@*[local-name()="pageSize"]', dom, null, XPathResult.NUMBER_TYPE, null).numberValue;
+    var totalPage = queryTotalCount(dom);
+    var pageSize = queryPagesize(dom);
 
     return Math.ceil(totalPage / pageSize);
+  }
+
+  function queryPagesize(dom) {
+    return dom.evaluate('//@*[local-name()="pageSize"]', dom, null, XPathResult.NUMBER_TYPE, null).numberValue;
+  }
+
+  function queryTotalCount(dom) {
+    return dom.evaluate('//@*[local-name()="totalCount"]', dom, null, XPathResult.NUMBER_TYPE, null).numberValue;
   }
 
   /**
