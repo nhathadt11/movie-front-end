@@ -20,9 +20,11 @@
     }
 
     this.setData = function(data) {
+      console.group('Model');
       console.log('%c Prev data: ', 'color:grey', _data);
       _data = data;
       console.log('%c Next data: ', 'color:green', _data);
+      console.groupEnd();
 
       this.notifyAll();
     }
