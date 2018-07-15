@@ -20,7 +20,9 @@
     }
 
     this.setData = function(data) {
+      console.log('%c Prev data: ', 'color:grey', _data);
       _data = data;
+      console.log('%c Next data: ', 'color:green', _data);
 
       this.notifyAll();
     }
@@ -43,7 +45,6 @@
     _model.register(this);
 
     this.notify = function(data) {
-      console.log('Notified data: ', data);
       _onDataChanged(data);
     }
   }
