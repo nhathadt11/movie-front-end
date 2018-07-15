@@ -19,7 +19,7 @@
     showListView: true,
     params: {
       page: 1,
-      title: undefined,
+      title: '',
     },
   });
   var view = new MVC.View(model, handleModelChange);
@@ -28,10 +28,21 @@
     fetchMovieDetail: fetchMovieDetail,
     backToListView: backToListView,
     searchFor: searchFor,
+    home: home,
+  });
+
+  // one-way data biding to search bar
+  MVC.View(model, function(data) {
+    var title = data.params.title;
+    var searchBar = document.querySelector('.search-bar');
+
+    if (searchBar) {
+      searchBar.value = title;
+    }
   });
 
   // expose controller to global scope
-  document.controller = controller;
+  window.controller = controller;
 
   function handleModelChange(data) {
     showListView(Visibility.HIDDEN);
@@ -123,6 +134,10 @@
 
   function backToListView() {
     controller.updateData({ showListView: true });
+  }
+
+  function home() {
+    fetchMovies(1, '');
   }
 
   function displayMovies(xml) {
