@@ -4,6 +4,13 @@
     fetchMovieStylesheet();
     fetchMovieDetailStylesheet();
     fetchMovies(1);
+
+    // one-way data biding to search bar
+    MVC.OneWayBindingInputControl(
+      model,
+      document.getElementById('searchBar'),
+      function(data) { return data.params.title; }
+    );
   });
 
   // var BASE_URL = 'http://localhost:4567';
@@ -29,16 +36,6 @@
     backToListView: backToListView,
     searchFor: searchFor,
     home: home,
-  });
-
-  // one-way data biding to search bar
-  MVC.View(model, function(data) {
-    var title = data.params.title;
-    var searchBar = document.querySelector('.search-bar');
-
-    if (searchBar) {
-      searchBar.value = title;
-    }
   });
 
   // expose controller to global scope

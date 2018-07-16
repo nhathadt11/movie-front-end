@@ -8,6 +8,7 @@
       Model: Model,
       View: View,
       Controller: Controller,
+      OneWayBindingInputControl: OneWayBindingInputControl,
     }
   }
 
@@ -64,5 +65,27 @@
     for (var control in controls) {
       this[control] = controls[control];
     }
+  }
+
+  function OneWayBindingInputControl(model, viewSelector, mapDataToValueProp) {
+    var _model = model;
+    var _viewSelector = validator.requireDomNode(viewSelector);
+    var _mapDataToValueProp = mapDataToValueProp;
+
+    _model.register(this);
+
+    this.notify = function(data) {
+      _viewSelector.value = _mapDataToValueProp(data);
+    }
+  }
+
+  // Validator
+  var validator = {
+    requireDomNode: requireDomNode,
+  }
+
+  function requireDomNode(value) {
+    if (value instanceof Node) return value;
+    throw new TypeError('View selector must be a DOM Node');
   }
 })(window);
