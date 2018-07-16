@@ -58,6 +58,11 @@ body {
   margin: 15px;
 }
 
+.movie-list {
+  display: flex;
+  flex-wrap: wrap;
+}
+
 .card {
   max-width: 100%;
   position: relative;
