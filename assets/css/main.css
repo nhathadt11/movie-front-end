@@ -230,6 +230,12 @@ body {
 .image > img {
   width: 250px;
   height: auto;
+  min-height: 360px;
+}
+
+.image-placholder {
+  background-size: 250px 360px;
+  background-color: rgba(165, 165, 165, .3);
 }
 
 .movie {
