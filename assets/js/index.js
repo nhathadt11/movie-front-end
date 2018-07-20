@@ -255,15 +255,16 @@
   }
 
   function paginationWithPageBreak(totalPage, pageActive) {
-    let delta = 2,
+    var delta = 2,
         left = pageActive - delta,
         right = pageActive + delta + 1,
         result = [];
 
-    result = Array.from({length: totalPage}, (v, k) => k + 1)
-        .filter(i => i && i >= left && i < right);
+    result = Array
+      .from({length: totalPage}, function(_, k) { return k + 1 })
+      .filter(function(i) { return (i && i >= left && i < right) });
 
-    if (totalPage > 7) {
+    if (totalPage > (delta * 2 + 3)) {
       if (pageActive - delta - 1 > 1) {
         result.splice(0, 0, '...');
       }
