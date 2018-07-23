@@ -255,10 +255,10 @@
   }
 
   function paginationWithPageBreak(totalPage, pageActive) {
-    var delta = 2,
-        left = pageActive - delta,
-        right = pageActive + delta + 1,
-        result = [];
+    var delta = 2
+    var left = pageActive - delta;
+    var right = pageActive + delta + 1;
+    var result = [];
 
     result = Array
       .from({length: totalPage}, function(_, k) { return k + 1 })
@@ -278,6 +278,8 @@
       if (result.find(findValue(totalPage)) === undefined) {
         result.push(totalPage);
       }
+    } else {
+      result = Array.from({length: totalPage}, function(_, k) { return k + 1 });
     }
 
     return result;
