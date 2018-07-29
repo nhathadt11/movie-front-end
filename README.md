@@ -1,7 +1,7 @@
 # movie-front-end
 
 ## What is this?
-  A movie browser
+  A movie browser [Preview](https://your-movies.surge.sh)
 
 ## Related projects:
   - Web app: [movie-web](https://github.com/nhathadt11/movie-web)
